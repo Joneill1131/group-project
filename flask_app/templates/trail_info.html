@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>Trail Info</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  {% with messages = get_flashed_messages() %}     
+      {% if messages %}                            
+      {% for message in messages %}            
+      <p>{{message}}</p>                   
+          {% endfor %}
+  {% endif %}
+  {% endwith %}
+  <h1>{{ trail['name'] }}</h1>
+  <button type="submit" class="btn btn-primary">Like</button>
+  <div class="anchor">
+    <a href="/trails/all">Back to all trails |</a>
+    <a href="/logout">Logout</a>
+  </div>
+  <table class="trail_table">
+    <thead>
+      <tr>
+        <th scope="col">Location:</th>
+        <th scope="col">Distance (in miles):</th>
+        <th scope="col">Rating:</th>
+        <th scope="col">Reviews:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ trail.location }}</td>
+        <td>{{ trail.distance }}</td>
+        <td>{{ trail.rating }}</td>
+        <td>{{ review.content }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <form action='/add_review/{{ trail.id }}' method='post'>
+    <div class="form-group">
+      <label for="review">Add Review:</label>
+      <textarea rows="5" cols="80" id="review" name="review"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Add review</button>
+  </form>
+</body>
+
+</html>

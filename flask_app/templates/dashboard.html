@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>Dashboard</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="anchor">
+    <a href="/trails/all">All Trails |</a>
+    <a href="/trails/new">Add Trail |</a>
+    <a href="/logout">Logout</a>
+  </div>
+  <div class="welcome_headers">
+    <h1>Welcome {{ user['first_name'] + " " + user['last_name'] + "!" }}</h1>
+    <h2>Here are your completed trails:</h2>
+  </div>
+  <table class="my_table">
+    <thead>
+      <tr>
+        <th scope="col">Trails:</th>
+        <th scope="col">Trail Completion Date:</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if session['user_id'] == trail.user.id %}
+      {% for trail in trails %}
+      <tr>
+        <td>{{ trail.name }}</td>
+        <td>{{ trail.complete_date }}</td>
+        <td><a href="/trails/edit/{{trail['id']}}"> Update Completion Date |</a><a href="/delete/{{trail['id']}}">
+            Remove</a></td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+    </tbody>
+  </table>
+</body>
+
+</html>

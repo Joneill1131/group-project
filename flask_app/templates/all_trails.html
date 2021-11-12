@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>All trails</title>
+</head>
+
+<body>
+    <div class="anchor">
+        <a href="/dashboard">Dashboard |</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <div class="welcome_headers">
+        <h1>Welcome {{ user['first_name'] + " " + user['last_name'] + "!!" }}</h1>
+        <h2>All Trails:</h2>
+    </div>
+    <table class="all_table">
+        <thead>
+            <tr>
+                <th scope="col">Trail Name</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trail in trails %}
+            <tr>
+                <td>{{ trail.name }}</td>
+                <td><a href="/trails/{{trail['name']}}"> Trail Info </a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
