@@ -5,4 +5,4 @@ lets coding and have fun
 
 
 
-pipenv install flask, PyMySQL, flask-bcrypt, python-dotenv, requests
+pipenv install flask PyMySQL flask-bcrypt python-dotenv requests
