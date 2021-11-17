@@ -57,7 +57,7 @@ class User:
     #getting users who likes same trail
     @classmethod
     def get_users_like_same_trail(cls,data):
-        query = "SELECT * FROM joins JOIN users ON user_id = users.id JOIN trails ON trail_id= trails.id WHERE trail_id = %(id)s;"
+        query = "SELECT * FROM user_likes_trail JOIN users ON user_id = users.id JOIN trails ON trail_id= trails.id WHERE trail_id = %(id)s;"
         results = connectToMySQL(cls.db).query_db(query,data)
         all_users = []
         for users in results:

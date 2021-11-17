@@ -11,7 +11,7 @@
   <title>Dashboard</title>
 </head>
 
-<body>
+<body background="../static/img/2.jpeg">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
@@ -20,37 +20,56 @@
         </li>
       </ul>
     </div>
+    <div class="anchor">
+      <a href="/mytrails">All Trails |</a>
+      <a href="/trail/new">Add Trail |</a>
+      <a href="/logout">Logout</a>
+    </div>
   </nav>
-  <div class="anchor">
-    <a href="/trails/all">All Trails |</a>
-    <a href="/trails/new">Add Trail |</a>
-    <a href="/logout">Logout</a>
+
+  <!-- main content -->
+  <div class="col2">
+    <div class="welcome_headers">
+      <h1>Welcome {{user.first_name.title()}} {{user.last_name.title()}}!!</h1>
+      <h2>Here are your completed trails:</h2>
+    </div>
+    <table class="my_table box">
+      <thead>
+        <tr>
+          <th scope="col">Trails:</th>
+          <th scope="col">Completion Date:</th>
+          <th scope="col">Total Likes:</th>
+          <th scope="col">Actions:</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for trail in trails %}
+        <tr class="vdivider">
+          <td><a href="/trail/{{trail.id}}">{{ trail.name.title() }}</a></td>
+          <td>{{ trail.complete_date.strftime('%Y-%m-%d') }}</td>
+          <td>{{trail.liker | length}}</td>
+          <td>
+            {% if trail.id in trails_user_liked %}
+            <form action="/trail/{{trail.id}}/unlike" method="post">
+              <input type="submit" value="Unlike" class="btn btn-secondary">
+            </form>
+            {% else %}
+            <form action="/trail/{{trail.id}}/like" method="post">
+              <input type="submit" value="Like" class="btn btn-danger">
+            </form>
+            {% endif %}
+            {% if trail.user_id == session.user_id %}
+            <a href="/edit/{{trail.id}}/trail" class="btn btn-info">Edit Trail</a>
+            <form action="/delete/{{trail.id}}/trail" method="post">
+              <input type='submit' value="Remove" class="btn btn-warning">
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
-  <div class="welcome_headers">
-    <h1>Welcome {{ user['first_name'] + " " + user['last_name'] + "!" }}</h1>
-    <h2>Here are your completed trails:</h2>
-  </div>
-  <table class="my_table">
-    <thead>
-      <tr>
-        <th scope="col">Trails:</th>
-        <th scope="col">Trail Completion Date:</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% if session['user_id'] == trail.user.id %}
-      {% for trail in trails %}
-      <tr>
-        <td>{{ trail.name }}</td>
-        <td>{{ trail.complete_date }}</td>
-        <td><a href="/trails/edit/{{trail['id']}}"> Update Completion Date |</a><a href="/delete/{{trail['id']}}">
-            Remove</a></td>
-      </tr>
-      {% endfor %}
-      {% endif %}
-    </tbody>
-  </table>
 </body>
 
 </html>

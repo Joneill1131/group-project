@@ -30,7 +30,7 @@ class Trail:
 
     @classmethod # get all from table trails, user who created trail, likers who like this trail
     def get_all_trail(cls):
-        query ="select * from trails left join users on users.id = trails.user_id left join joins on trails.id = joins.trail_id left join users as liker on joins.user_id = liker.id;"        #goal:  turn a list of dict into a list of objects with each trail object associated with a user object
+        query ="select * from trails left join users on users.id = trails.user_id left join user_likes_trail on trails.id = user_likes_trail.trail_id left join users as liker on user_likes_trail.user_id = liker.id;"        #goal:  turn a list of dict into a list of objects with each trail object associated with a user object
         results =  connectToMySQL(cls.db).query_db(query) #list of dict
         all_trails = [] # list of objects
         for row in results:
@@ -107,14 +107,14 @@ class Trail:
 
     @classmethod
     def like_trail(cls,data):
-        query = 'insert into joins (user_id,trail_id) values(%(user_id)s, %(trail_id)s);'
+        query = 'insert into user_likes_trail (user_id,trail_id) values(%(user_id)s, %(trail_id)s);'
         return connectToMySQL(cls.db).query_db(query,data)
 
 
 
     @classmethod
     def unlike_trail(cls,data):
-        query = 'delete from joins where trail_id=%(trail_id)s and user_id =%(user_id)s;'
+        query = 'delete from user_likes_trail where trail_id=%(trail_id)s and user_id =%(user_id)s;'
         return connectToMySQL(cls.db).query_db(query,data)
 
 
@@ -122,7 +122,7 @@ class Trail:
     @classmethod
     def trails_user_liked(cls,data):
         trails_liked = []
-        query = "SELECT trail_id FROM joins JOIN users on users.id= user_id where user_id=%(id)s;"
+        query = "SELECT trail_id FROM user_likes_trail JOIN users on users.id= user_id where user_id=%(id)s;"
         results = connectToMySQL(cls.db).query_db(query,data)
         for result in results:
             trails_liked.append(result['trail_id'])
@@ -138,14 +138,14 @@ class Trail:
         print(today)
         if len(trail['name']) < 3:
             is_valid = False
-            flash("trail Name must be at least 3 characters","trail")
+            flash("Trail name must be at least 3 characters","trail")
         if len(trail['location']) == '':
             is_valid = False
             flash("Location cannot blank","trail")
-        if trail['date'] ==  '':
+        if trail['complete_date'] ==  '':
             is_valid = False
             flash("Please enter a date","trail")
-        if trail['date'] < today:
+        if trail['complete_date'] < today:
             is_valid = False
             flash('Event day cannot be in the past','trail')
         return is_valid

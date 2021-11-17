@@ -20,7 +20,7 @@ class Review:
 
     @classmethod #get reviews that relate to trail
     def get_trail_reviews(cls,data):
-        query = 'select * from reviews left join users on reviews.user_id = users.id where users.id = %(id)s;'
+        query = 'select * from reviews left join trails on reviews.trail_id = trails.id where trails.id = %(id)s;'
         results = connectToMySQL(cls.db).query_db(query,data)
         reviews = []
         for review in results:
@@ -30,5 +30,5 @@ class Review:
 
     @classmethod  #delete reviews
     def destroy(cls,data):
-        query = "DELETE FROM reviews WHERE id = %(id)s;"
+        query = "DELETE FROM reviews WHERE trail_id = %(trail_id)s and user_id =%(user_id)s;"
         return connectToMySQL(cls.db).query_db(query,data)

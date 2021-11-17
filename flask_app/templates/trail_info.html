@@ -11,7 +11,7 @@
   <title>Trail Info</title>
 </head>
 
-<body>
+<body background="../static/img/2.jpeg">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
@@ -20,45 +20,69 @@
         </li>
       </ul>
     </div>
-  </nav>
-  {% with messages = get_flashed_messages() %}     
-      {% if messages %}                            
-      {% for message in messages %}            
-      <p>{{message}}</p>                   
-          {% endfor %}
-  {% endif %}
-  {% endwith %}
-  <h1>{{ trail['name'] }}</h1>
-  <button type="submit" class="btn btn-primary">Like</button>
-  <div class="anchor">
-    <a href="/trails/all">Back to all trails |</a>
-    <a href="/logout">Logout</a>
-  </div>
-  <table class="trail_table">
-    <thead>
-      <tr>
-        <th scope="col">Location:</th>
-        <th scope="col">Distance (in miles):</th>
-        <th scope="col">Rating:</th>
-        <th scope="col">Reviews:</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{ trail.location }}</td>
-        <td>{{ trail.distance }}</td>
-        <td>{{ trail.rating }}</td>
-        <td>{{ review.content }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <form action='/add_review/{{ trail.id }}' method='post'>
-    <div class="form-group">
-      <label for="review">Add Review:</label>
-      <textarea rows="5" cols="80" id="review" name="review"></textarea>
+    <div class="anchor">
+      <a href="/mytrails">Back To All Trails |</a>
+      <a href="/logout">Logout</a>
     </div>
-    <button type="submit" class="btn btn-primary">Add review</button>
-  </form>
+  </nav>
+
+  <!-- main content -->
+  <div class="col2">
+    <h1 class="welcome_headers">{{ trail.name.title()}}</h1>
+
+    <div class="box">
+      <table class="trail_table">
+        <thead>
+          <tr>
+            <th scope="col">Location:</th>
+            <th scope="col">Distance (in miles):</th>
+            <th scope="col">Rating:</th>
+            <th scope="col">Reviews:</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ trail.location }}</td>
+            <td>{{ trail.distance }} miles</td>
+            <td>{{ trail.rating }}</td>
+            <td id="reviewdisplay">
+              {% for review in all_reviews %}
+              <div class="vdivider">
+                {{review.content}}<br>
+              </div>
+              {% endfor %}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="hspace">
+        <form action='/trail/{{trail.id}}/add_reviews' method='post'>
+          <div class="form-group vlist">
+            <label for="content">Add Review:</label>
+            <textarea rows="4" cols="40" id="review" name="content"></textarea>
+          </div>
+          <input type="submit" value='Add Review' class="btn btn-primary">
+        </form>
+        <div class="card col-4 my-3">
+          <div id="map" style="width:100%;height: 100%;"></div>
+        </div>
+        <div class="map">
+          <script>
+            let map;
+            function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: {{map.lat}}, lng: {{map.lng}} },
+                zoom: 17,
+                });
+            }
+          </script>
+          <script async src="https://maps.googleapis.com/maps/api/js?key={{api_key}}&callback=initMap">
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

@@ -11,31 +11,44 @@
     <title>All trails</title>
 </head>
 
-<body>
-    <div class="anchor">
-        <a href="/dashboard">Dashboard |</a>
-        <a href="/logout">Logout</a>
-    </div>
-    <div class="welcome_headers">
-        <h1>Welcome {{ user['first_name'] + " " + user['last_name'] + "!!" }}</h1>
-        <h2>All Trails:</h2>
-    </div>
-    <table class="all_table">
-        <thead>
-            <tr>
-                <th scope="col">Trail Name</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for trail in trails %}
-            <tr>
-                <td>{{ trail.name }}</td>
-                <td><a href="/trails/{{trail['name']}}"> Trail Info </a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
+<body background="../static/img/4.jpeg">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="anchor">
+            <a href="/dashboard">Dashboard |</a>
+            <a href="/trail/new">Add Trail |</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
 
+    <!-- main content -->
+    <div class="col2">
+        <div class="welcome_headers">
+            <h1>Welcome {{user.first_name.title()}} {{user.last_name.title()}}!!</h1>
+            <h2>All Trails:</h2>
+        </div>
+        <table class="all_table box">
+            <thead>
+                <tr>
+                    <th scope="col">Trail Name:</th>
+                    <th scope="col">Actions:</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trail in trails %}
+                <tr class="vdivider">
+                    <td>{{ trail.name }}</td>
+                    <td><a href="/trail/{{trail.id}}"> Trail Info </a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
 </html>
