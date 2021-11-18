@@ -37,6 +37,7 @@
             <thead>
                 <tr>
                     <th scope="col">Trail Name:</th>
+                    <th scope="col">Completion Date:</th>
                     <th scope="col">Actions:</th>
                 </tr>
             </thead>
@@ -44,6 +45,7 @@
                 {% for trail in trails %}
                 <tr class="vdivider">
                     <td>{{ trail.name }}</td>
+                    <td>{{ trail.complete_date.strftime('%Y-%m-%d') }}</td>
                     <td><a href="/trail/{{trail.id}}"> Trail Info </a></td>
                 </tr>
                 {% endfor %}
