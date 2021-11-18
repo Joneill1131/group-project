@@ -25,7 +25,7 @@ def register():
         "password": bcrypt.generate_password_hash(request.form["password"]),
     }
     id = User.save(new_user)
-    if not id:
+    if id:
         flash("Email already taken.","register")
         return redirect('/')
     session['user_id'] = id
