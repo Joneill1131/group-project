@@ -44,7 +44,7 @@
             <tbody>
                 {% for trail in trails %}
                 <tr class="vdivider">
-                    <td>{{ trail.name }}</td>
+                    <td>{{ trail.name.title() }}</td>
                     <td>{{ trail.complete_date.strftime('%Y-%m-%d') }}</td>
                     <td><a href="/trail/{{trail.id}}"> Trail Info </a></td>
                 </tr>

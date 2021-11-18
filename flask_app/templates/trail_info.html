@@ -44,7 +44,8 @@
           <tr>
             <td>{{ trail.location }}</td>
             <td>{{ trail.distance }} miles</td>
-            <td>{{ trail.rating }}</td>
+            <td>{{ trail.rating }}<span style="font-size: 130%;color: yellow;">&starf;</span>
+            </td>
             <td id="reviewdisplay">
               {% for review in all_reviews %}
               <div class="vdivider">
@@ -73,7 +74,7 @@
             function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
                 center: { lat: {{map.lat}}, lng: {{map.lng}} },
-                zoom: 17,
+                zoom: 12,
                 });
             }
           </script>
