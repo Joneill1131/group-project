@@ -81,9 +81,10 @@ body {
 
 /* useless code; delete everything below this line */
 .ew {
-    background-color: chartreuse;
-    border: 5px solid palevioletred;
+    display: flex;
+    justify-content: flex-start;
 }
+
 
 
 .rate {
@@ -102,7 +103,7 @@ body {
     white-space:nowrap;
     cursor:pointer;
     font-size:30px;
-    color:#ccc;
+    color:rgb(58, 58, 58);
 }
 .rate:not(:checked) > label:before {
     content: '★ ';
