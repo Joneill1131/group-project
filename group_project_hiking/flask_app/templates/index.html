@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>Home Page</title>
+</head>
+
+<body background="../static/img/1.jpeg" class="home">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- main body -->
+    <!-- register -->
+  <div class="col2">
+    <div class='info welcome_headers'>
+      <h1>Welcome to Happy Trails!</h1>
+      <h2>Your go-to guide for local trails</h2>
+    </div>
+    <div class="welcome_forms hspace">
+      <form action='/register' method='post' class="box col-4">
+        <h1>Sign Up</h1>
+        <div class="form-group text-danger">
+          {% with messages = get_flashed_messages(category_filter=['register']) %}     
+              {% if messages %}                            
+              {% for message in messages %}            
+              <p>{{message}}</p>                   
+                  {% endfor %}
+          {% endif %}
+          {% endwith %}
+        </div>
+        <div class="form-group">
+          <label for="first_name">First Name:</label>
+          <input type="text" class="form-control" id="first_name" name="first_name" aria-describedby="fnameHelp">
+        </div>
+        <div class="form-group">
+          <label for="last_name">Last Name:</label>
+          <input type="text" class="form-control" id="last_name" name="last_name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <div class="form-group">
+          <label for="confirm">Confirm Password:</label>
+          <input type="password" class="form-control" id="confirm" name="confirm">
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+      </form>
+
+      <!-- login -->
+      <form action='/login' method='post' class="box col-4">
+        <h1>Sign In</h1>
+        <div class="form-group text-danger">
+          {% with messages = get_flashed_messages(category_filter=['login']) %}     
+              {% if messages %}                            
+              {% for message in messages %}            
+              <p>{{message}}</p>                   
+                  {% endfor %}
+          {% endif %}
+          {% endwith %}
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

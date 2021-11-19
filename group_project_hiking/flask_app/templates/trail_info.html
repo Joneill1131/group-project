@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>Trail Info</title>
+</head>
+
+<body background="../static/img/6.jpeg">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+    <div class="anchor">
+      <a href="/mytrails">Back To All Trails |</a>
+      <a href="/logout">Logout</a>
+    </div>
+  </nav>
+
+  <!-- main content -->
+  <div class="col2">
+    <h1 class="welcome_headers">{{ trail.name.title()}}</h1>
+
+    <div class="box">
+      <table class="trail_table">
+        <thead>
+          <tr>
+            <th scope="col">Location:</th>
+            <th scope="col">Distance (in miles):</th>
+            <th scope="col">Rating:</th>
+            <th scope="col">Reviews:</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ trail.location }}</td>
+            <td>{{ trail.distance }} miles</td>
+            <td>{{ trail.rating }}/5<span style="font-size: 130%;color: yellow;">&starf;</span>
+            </td>
+            <td id="reviewdisplay">
+              {% for review in all_reviews %}
+              <div class="vdivider">
+                {{review.content}}<br>
+              </div>
+              {% endfor %}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="hspace">
+        <div class="card col-4 my-3">
+          <div id="map" style="width:100%;height: 100%;"></div>
+        </div>
+        <div class="map">
+          <form action='/trail/{{trail.id}}/add_reviews' method='post'>
+            <div class="form-group vlist">
+              <label for="content">Add Review:</label>
+              <textarea rows="4" cols="40" id="review" name="content"></textarea>
+            </div>
+            <div class="hspace">
+            <input type="submit" value='Add Review' class="btn btn-primary">
+          </form>
+
+        <form action="/trail/{{trail.id}}/delete_reviews" method="post">
+          <input type='submit' value="Delete" class="btn btn-warning">
+        </form>
+</div>
+          <script>
+            let map;
+            function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: {{map.lat}}, lng: {{map.lng}} },
+                zoom: 12,
+                });
+            }
+          </script>
+          <script async src="https://maps.googleapis.com/maps/api/js?key={{api_key}}&callback=initMap">
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

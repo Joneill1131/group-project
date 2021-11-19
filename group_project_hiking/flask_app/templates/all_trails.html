@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>All trails</title>
+</head>
+
+<body background="../static/img/4.jpeg">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="anchor">
+            <a href="/dashboard">Dashboard |</a>
+            <a href="/trail/new">Add Trail |</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <!-- main content -->
+    <div class="col2">
+        <div class="welcome_headers">
+            <h1>Welcome {{user.first_name.title()}} {{user.last_name.title()}}!!</h1>
+            <h2>Here are your completed trails:</h2>
+        </div>
+        <table class="all_table box">
+            <thead>
+                <tr>
+                    <th scope="col">Trail Name:</th>
+                    <th scope="col">Completion Date:</th>
+                    <th scope="col">Actions:</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trail in trails %}
+                <tr class="vdivider">
+                    <td>{{ trail.name.title() }}</td>
+                    <td>{{ trail.complete_date.strftime('%Y-%m-%d') }}</td>
+                    <td><a href="/trail/{{trail.id}}"> Trail Info </a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
